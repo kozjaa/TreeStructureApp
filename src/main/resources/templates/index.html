@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tree</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css}">
+    <script th:src="@{/webjars/bootstrap/4.1.0/js/bootstrap.min.js}"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <br>
+    <div class="row">
+        <!-- Form that adds new tree's root -->
+        <form class="form-inline" th:action="@{/saveRoot}" th:object="${node}" th:method="post">
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="number" class="form-control" placeholder="Root value" th:field="*{data}">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Add tree</button>
+        </form>
+    </div>
+    <br>
+    <!-- Recursive list that shows all the tree's structure -->
+    <div th:fragment="submenu (nodes)" th:remove="tag">
+        <ul class="list-group">
+            <li class="list-group-item" th:each="child : ${nodes}">
+                <a th:href="${'/node/'+child.id}" class="btn btn-outline-success btn-lg">
+                    <span th:if="${child.leaf}" th:text="${child.leafValue}"></span>
+                    <span th:if="${!child.leaf}" th:text="${child.data}"></span></a>
+                <div th:replace="submenu :: submenu(nodes=${child})" th:remove="tag" />
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

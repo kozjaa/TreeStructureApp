@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tree</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css}">
+    <script th:src="@{/webjars/bootstrap/4.1.0/js/bootstrap.min.js}"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+<!-- Fragment of recursive main list -->
+<div th:fragment="submenu (nodes)" th:remove="tag">
+    <ul class="list-group">
+        <li class="list-group-item" th:each="child : ${nodes.children}">
+            <a th:href="${'/node/'+child.id}" class="btn btn-outline-success btn-sm">
+                <span th:if="${child.leaf}" th:text="${child.leafValue}"></span>
+                <span th:if="${!child.leaf}" th:text="${child.data}"></span></a>
+            <div th:replace="submenu :: submenu(nodes=${child})" th:remove="tag" />
+        </li>
+    </ul>
+</div>
+</body>
+</html>

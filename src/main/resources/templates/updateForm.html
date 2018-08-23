@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tree</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css}">
+    <script th:src="@{/webjars/bootstrap/4.1.0/js/bootstrap.min.js}"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <br>
+    <!-- Form that updates the node -->
+    <form class="form-inline" th:action="@{/updateNode}" th:object="${node}" th:method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{parent}"/>
+        <input type="hidden" th:field="*{children}"/>
+        <input type="hidden" th:field="*{leafValue}"/>
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="number" class="form-control" placeholder="New value" th:field="*{data}">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Save</button>
+    </form>
+</div>
+</body>
+</html>
